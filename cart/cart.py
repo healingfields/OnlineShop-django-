@@ -27,7 +27,7 @@ class Cart(object):
   def remove(self, product):
     product_id = str(product.id)
     if product_id in self.cart:
-      del self.cart['product_id']
+      del self.cart[product_id]
       self.save()
   
   def __iter__(self):
@@ -42,13 +42,13 @@ class Cart(object):
       item['total_price'] = item['price'] * item['quantity']
       yield item
     
-    def __len__(self):
+  def __len__(self):
       return sum(item['quantity'] for item in self.cart.values())
     
-    def get_total_price(self):
+  def get_total_price(self):
       return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
-    def clear(self):
+  def clear(self):
       self.session[settings.CART_SESSION_ID]
       self.save()
 
