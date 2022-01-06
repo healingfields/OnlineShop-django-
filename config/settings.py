@@ -134,3 +134,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+BRAINTREE_MERCHANT_ID = '7c6bzvdmq329fhr8'
+BRAINTREE_PUBLIC_KEY = '6vxf58f4bpscsy8p'
+BRAINTREE_PRIVATE_KEY = 'd86647d6a01d99a83704ef822e9e38d3'
+
+import braintree
+BRAINTREE_CONF = braintree.Configuration(
+                braintree.Environment.Sandbox,
+                BRAINTREE_MERCHANT_ID,
+                BRAINTREE_PUBLIC_KEY,
+                BRAINTREE_PRIVATE_KEY
+)
