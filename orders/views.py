@@ -3,6 +3,7 @@ from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 
+
 def order_create(request):
   cart = Cart(request)
   form = OrderCreateForm()
@@ -17,7 +18,7 @@ def order_create(request):
                                   quantity = item['quantity'])
       cart.clear()
       return render(request, 'orders/order/created.html', {'order': order})
-  else:
-    return render(request, 'orders/order/create.html', {'cart': cart, 'form':form})
+  return render(request, 'orders/order/create.html', {'cart': cart, 'form':form})
+    
 
 
