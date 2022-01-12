@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from orders.models import Order
 import braintree
+from .tasks import payment_completed
 
 
 gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
@@ -25,6 +26,7 @@ def payment_process(request):
       order.paid = True
       order.braintree_id = result.transaction.id
       order.save()
+      payment_completed.delay(order.id)
       return redirect('payment:done')
     else:
       return redirect('payment:canceled')
@@ -33,6 +35,7 @@ def payment_process(request):
     return render(request, 'payment/process.html', {'order': order, 'client_token': client_token})
 
 def payment_done(request):
+
   return render(request, 'payment/done.html')
 
 def payment_canceled(request):
